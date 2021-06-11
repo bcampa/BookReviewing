@@ -11,5 +11,8 @@ namespace BookReviewing.Entities.Models
         public int UserId { get; set; }
         public DateTime DatePosted { get; set; }
         public DateTime LastUpdate { get; set; }
+
+        public virtual Book Book { get; set; }
+        public virtual User User { get; set; }
     }
 }

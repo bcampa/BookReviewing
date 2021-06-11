@@ -38,17 +38,17 @@ namespace BookReviewing.Entities.Configurations
                 .HasColumnType("DATE")
                 .HasDefaultValue("CURRENT_TIMESTAMP");
 
-            //builder.HasOne(e => e.Book)
-            //    .WithMany(e => e.BookReview)
-            //    .HasForeignKey(e => e.BookId)
-            //    .OnDelete(DeleteBehavior.NoAction)
-            //    .HasConstraintName("FK_BOOK_REVIEW_BOOK");
+            builder.HasOne(e => e.Book)
+                .WithMany(e => e.BookReview)
+                .HasForeignKey(e => e.BookId)
+                .OnDelete(DeleteBehavior.NoAction)
+                .HasConstraintName("FK_BOOK_REVIEW_BOOK");
 
-            //builder.HasOne(e => e.User)
-            //    .WithMany(e => e.BookReview)
-            //    .HasForeignKey(e => e.UserId)
-            //    .OnDelete(DeleteBehavior.NoAction)
-            //    .HasConstraintName("FK_BOOK_REVIEW_USER");
+            builder.HasOne(e => e.User)
+                .WithMany(e => e.BookReview)
+                .HasForeignKey(e => e.UserId)
+                .OnDelete(DeleteBehavior.NoAction)
+                .HasConstraintName("FK_BOOK_REVIEW_USER");
         }
     }
 }
