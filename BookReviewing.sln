@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31321.278
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookReviewing", "BookReviewing\BookReviewing.csproj", "{19299BF4-DA65-484A-A182-9D75251F2712}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookReviewing", "BookReviewing\BookReviewing.csproj", "{19299BF4-DA65-484A-A182-9D75251F2712}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookReviewing.Entities", "BookReviewing.Entities\BookReviewing.Entities.csproj", "{10AB21D9-33CD-4846-A637-BDC35A57072F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookReviewing.Entities", "BookReviewing.Entities\BookReviewing.Entities.csproj", "{10AB21D9-33CD-4846-A637-BDC35A57072F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookReviewing.Tests", "BookReviewing.Tests\BookReviewing.Tests.csproj", "{F52A9E74-E31F-446E-BC98-C46E0E287200}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{10AB21D9-33CD-4846-A637-BDC35A57072F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{10AB21D9-33CD-4846-A637-BDC35A57072F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{10AB21D9-33CD-4846-A637-BDC35A57072F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F52A9E74-E31F-446E-BC98-C46E0E287200}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F52A9E74-E31F-446E-BC98-C46E0E287200}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F52A9E74-E31F-446E-BC98-C46E0E287200}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F52A9E74-E31F-446E-BC98-C46E0E287200}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
