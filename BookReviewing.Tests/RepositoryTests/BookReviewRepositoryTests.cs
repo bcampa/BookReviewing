@@ -36,11 +36,18 @@ namespace BookReviewing.Tests.RepositoryTests
         [Test]
         public void AddShouldSucceed()
         {
-            _bookRepository.Add(new Book());
+            var book = new Book();
+            _bookRepository.Add(book);
             _bookRepository.SaveChanges();
-            _userRepository.Add(new User());
+            var user = new User();
+            _userRepository.Add(user);
             _userRepository.SaveChanges();
-            var bookReview = new BookReview { UserId = 1, BookId = 1 };
+            var bookReview = new BookReview
+            {
+                UserId = user.Id,
+                BookId = book.Id,
+                Comment = "This review was created by a unit test."
+            };
             _bookReviewRepository.Add(bookReview);
 
             Assert.DoesNotThrow(() => _bookReviewRepository.SaveChanges());
