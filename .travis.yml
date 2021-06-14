@@ -3,7 +3,7 @@ solution: BookReviewing.sln
 mono: none
 dotnet: 5.0.301
 before_script:
-    - dotnet restore BookReview.sln
+    - dotnet restore
 script:
-    - dotnet build BookReview.sln
-    - dotnet test BookReview.sln
+    - dotnet build
+    - dotnet test
