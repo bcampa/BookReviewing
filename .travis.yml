@@ -1,7 +1,7 @@
 language: csharp
 solution: BookReviewing.sln
 mono: none
-dotnet: 3.1.0
+dotnet: 3.1
 sudo: required
 install:
     - sudo apt-get install nuget
