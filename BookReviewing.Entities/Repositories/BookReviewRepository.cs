@@ -5,21 +5,9 @@ using System.Linq;
 
 namespace BookReviewing.Entities.Repositories
 {
-    public class BookReviewRepository
+    public class BookReviewRepository : BaseRepository<BookReview>
     {
-        private readonly BookReviewingContext _context;
-
-        public BookReviewRepository()
-        {
-            _context = new BookReviewingContext();
-        }
-
-        public List<BookReview> GetAll()
-        {
-            return _context.BookReviews
-                .AsNoTracking()
-                .ToList();
-        }
+        public BookReviewRepository() : base() { }
 
         public List<BookReview> GetByBookId(int bookId)
         {
@@ -35,37 +23,6 @@ namespace BookReviewing.Entities.Repositories
                 .AsNoTracking()
                 .Where(x => x.UserId == userId)
                 .ToList();
-        }
-
-        public BookReview GetById(int id)
-        {
-            return _context.BookReviews.Find(id);
-        }
-
-        public void Add(BookReview bookReview)
-        {
-            _context.BookReviews.Add(bookReview);
-        }
-
-        public void Update(BookReview bookReview)
-        {
-            _context.BookReviews.Update(bookReview);
-        }
-
-        public void Delete(BookReview bookReview)
-        {
-            _context.BookReviews.Remove(bookReview);
-        }
-
-        public void Delete(int id)
-        {
-            var toBeDeleted = GetById(id);
-            Delete(toBeDeleted);
-        }
-
-        public void SaveChanges()
-        {
-            _context.SaveChanges();
         }
     }
 }
