@@ -1,0 +1,10 @@
+language: csharp
+solution: BookReviewing.sln
+mono: none
+dotnet: 5.0.301
+install:
+  - nuget restore solution-name.sln
+  - nuget install NUnit.Console -Version 3.9.0 -OutputDirectory testrunner
+script:
+  - dotnet restore
+  - dotnet test
