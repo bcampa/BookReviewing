@@ -6,7 +6,7 @@ sudo: required
 install:
     - sudo apt-get install nuget
     - nuget restore BookReviewing.sln
-    - nuget install NUnit.Console -Version 3.9.0 -OutputDirectory testrunner
+    - nuget install NUnit.Console -Version 3.13.2 -OutputDirectory testrunner
 script:
     - dotnet build
     - dotnet test
