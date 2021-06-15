@@ -32,7 +32,7 @@ namespace BookReviewing.Api.Controllers
         {
             _repository.Add(book);
             _repository.SaveChanges();
-            return Ok();
+            return Ok(book);
         }
     }
 }
