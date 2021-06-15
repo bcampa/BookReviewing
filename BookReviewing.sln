@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31321.278
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookReviewing.Api", "BookReviewing\BookReviewing.Api.csproj", "{19299BF4-DA65-484A-A182-9D75251F2712}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookReviewing.Api", "BookReviewing.Api\BookReviewing.Api.csproj", "{19299BF4-DA65-484A-A182-9D75251F2712}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookReviewing.Entities", "BookReviewing.Entities\BookReviewing.Entities.csproj", "{10AB21D9-33CD-4846-A637-BDC35A57072F}"
 EndProject
