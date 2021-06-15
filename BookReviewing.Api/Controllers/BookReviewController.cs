@@ -22,8 +22,8 @@ namespace BookReviewing.Api.Controllers
             return Ok(bookReviews);
         }
 
-        [HttpGet("/{id}")]
-        public IActionResult Get([FromRoute] int id)
+        [HttpGet("{id}")]
+        public IActionResult GetById([FromRoute] int id)
         {
             var bookReviews = _repository.GetById(id);
             return Ok(bookReviews);
@@ -45,7 +45,7 @@ namespace BookReviewing.Api.Controllers
             return Ok();
         }
 
-        [HttpDelete("/{id}"]
+        [HttpDelete("{id}")]
         public IActionResult Delete([FromRoute] int id)
         {
             _repository.DeleteById(id);
