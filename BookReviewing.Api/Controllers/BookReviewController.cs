@@ -34,7 +34,7 @@ namespace BookReviewing.Api.Controllers
         {
             _repository.Add(bookReview);
             _repository.SaveChanges();
-            return Ok();
+            return Ok(bookReview);
         }
 
         [HttpPut]
@@ -42,7 +42,7 @@ namespace BookReviewing.Api.Controllers
         {
             _repository.Update(bookReview);
             _repository.SaveChanges();
-            return Ok();
+            return Ok(bookReview);
         }
 
         [HttpDelete("{id}")]
