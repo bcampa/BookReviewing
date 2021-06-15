@@ -1,11 +1,6 @@
 ﻿using BookReviewing.Entities.Models;
 using BookReviewing.Entities.Repositories;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace BookReviewing.Api.Controllers
 {
@@ -20,9 +15,17 @@ namespace BookReviewing.Api.Controllers
             _repository = new BookReviewRepository();
         }
 
+        [HttpGet]
         public IActionResult Get()
         {
             var bookReviews = _repository.GetAll();
+            return Ok(bookReviews);
+        }
+
+        [HttpGet("/{id}")]
+        public IActionResult Get([FromRoute] int id)
+        {
+            var bookReviews = _repository.GetById(id);
             return Ok(bookReviews);
         }
 
@@ -30,6 +33,22 @@ namespace BookReviewing.Api.Controllers
         public IActionResult Add([FromBody] BookReview bookReview)
         {
             _repository.Add(bookReview);
+            _repository.SaveChanges();
+            return Ok();
+        }
+
+        [HttpPut]
+        public IActionResult Update([FromBody] BookReview bookReview)
+        {
+            _repository.Update(bookReview);
+            _repository.SaveChanges();
+            return Ok();
+        }
+
+        [HttpDelete("/{id}"]
+        public IActionResult Delete([FromRoute] int id)
+        {
+            _repository.DeleteById(id);
             _repository.SaveChanges();
             return Ok();
         }
