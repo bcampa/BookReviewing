@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BookReviewing.Entities\BookReviewing.Entities.csproj" />
+    <ProjectReference Include="..\BookReviewing.Services\BookReviewing.Services.csproj" />
   </ItemGroup>
 
 </Project>

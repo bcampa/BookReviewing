@@ -1,5 +1,6 @@
 ﻿using BookReviewing.Entities.Models;
 using BookReviewing.Entities.Repositories;
+using BookReviewing.Services.Dto.Book;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -28,8 +29,10 @@ namespace BookReviewing.Api.Controllers
         }
 
         [HttpPost]
-        public IActionResult Add([FromBody] Book book)
+        public IActionResult Add([FromBody] CreateBookRequest request)
         {
+            var book = new Book { Id = request.Id };
+
             _repository.Add(book);
             _repository.SaveChanges();
             return Ok(book);

@@ -1,6 +1,8 @@
 ﻿using BookReviewing.Entities.Models;
 using BookReviewing.Entities.Repositories;
+using BookReviewing.Services.Dto.BookReview;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace BookReviewing.Api.Controllers
 {
@@ -30,16 +32,34 @@ namespace BookReviewing.Api.Controllers
         }
 
         [HttpPost]
-        public IActionResult Add([FromBody] BookReview bookReview)
+        public IActionResult Add([FromBody] CreateBookReviewRequest request)
         {
+            var currentTime = DateTime.Now;
+
+            var bookReview = new BookReview
+            {
+                BookId = request.BookId,
+                UserId = request.UserId,
+                Score = request.Score,
+                Comment = request.Comment,
+                DatePosted = currentTime,
+                LastUpdate = currentTime
+            };
+
             _repository.Add(bookReview);
             _repository.SaveChanges();
             return Ok(bookReview);
         }
 
         [HttpPut]
-        public IActionResult Update([FromBody] BookReview bookReview)
+        public IActionResult Update([FromBody] UpdateBookReviewRequest request)
         {
+            var bookReview = _repository.GetById(request.Id);
+
+            bookReview.Score = request.Score;
+            bookReview.Comment = request.Comment;
+            bookReview.LastUpdate = DateTime.Now;
+
             _repository.Update(bookReview);
             _repository.SaveChanges();
             return Ok(bookReview);
