@@ -1,5 +1,6 @@
 ﻿using BookReviewing.Entities.Models;
 using BookReviewing.Entities.Repositories;
+using BookReviewing.Services.DomainServices;
 using BookReviewing.Services.Dto.BookReview;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -10,66 +11,45 @@ namespace BookReviewing.Api.Controllers
     [ApiController]
     public class BookReviewController : ControllerBase
     {
-        private readonly BookReviewRepository _repository;
+        private readonly BookReviewService _service;
 
         public BookReviewController()
         {
-            _repository = new BookReviewRepository();
+            _service = new BookReviewService();
         }
 
         [HttpGet]
         public IActionResult Get()
         {
-            var bookReviews = _repository.GetAll();
+            var bookReviews = _service.GetAll();
             return Ok(bookReviews);
         }
 
         [HttpGet("{id}")]
         public IActionResult GetById([FromRoute] int id)
         {
-            var bookReviews = _repository.GetById(id);
+            var bookReviews = _service.GetById(id);
             return Ok(bookReviews);
         }
 
         [HttpPost]
         public IActionResult Add([FromBody] CreateBookReviewRequest request)
         {
-            var currentTime = DateTime.Now;
-
-            var bookReview = new BookReview
-            {
-                BookId = request.BookId,
-                UserId = request.UserId,
-                Score = request.Score,
-                Comment = request.Comment,
-                DatePosted = currentTime,
-                LastUpdate = currentTime
-            };
-
-            _repository.Add(bookReview);
-            _repository.SaveChanges();
-            return Ok(bookReview);
+            BookReviewDto response = _service.Add(request);
+            return Ok(response);
         }
 
         [HttpPut]
         public IActionResult Update([FromBody] UpdateBookReviewRequest request)
         {
-            var bookReview = _repository.GetById(request.Id);
-
-            bookReview.Score = request.Score;
-            bookReview.Comment = request.Comment;
-            bookReview.LastUpdate = DateTime.Now;
-
-            _repository.Update(bookReview);
-            _repository.SaveChanges();
-            return Ok(bookReview);
+            BookReviewDto response = _service.Update(request);
+            return Ok(response);
         }
 
         [HttpDelete("{id}")]
         public IActionResult Delete([FromRoute] int id)
         {
-            _repository.DeleteById(id);
-            _repository.SaveChanges();
+            _service.Delete(id);
             return Ok();
         }
     }
