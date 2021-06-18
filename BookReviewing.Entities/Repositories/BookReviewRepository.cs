@@ -1,4 +1,5 @@
 ﻿using BookReviewing.Entities.Models;
+using BookReviewing.Shared.Filters;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,20 +10,20 @@ namespace BookReviewing.Entities.Repositories
     {
         public BookReviewRepository() : base() { }
 
-        public List<BookReview> GetByBookId(int bookId)
+        public List<BookReview> GetByFilter(BookReviewFilter filter)
         {
-            return _context.BookReviews
-                .AsNoTracking()
-                .Where(x => x.BookId == bookId)
-                .ToList();
-        }
+            IQueryable<BookReview> query = _context.BookReviews.AsNoTracking();
 
-        public List<BookReview> GetByUserId(int userId)
-        {
-            return _context.BookReviews
-                .AsNoTracking()
-                .Where(x => x.UserId == userId)
-                .ToList();
+            if (filter.BookId.HasValue)
+                query = query.Where(x => x.BookId == filter.BookId);
+            if (filter.UserId.HasValue)
+                query = query.Where(x => x.UserId == filter.UserId);
+
+            var paginatedQuery = query
+                .Skip(filter.CurrentPage * filter.PageSize)
+                .Take(filter.PageSize);
+
+            return paginatedQuery.ToList();
         }
     }
 }

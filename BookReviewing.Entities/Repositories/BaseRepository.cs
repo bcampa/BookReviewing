@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using BookReviewing.Shared.Filters;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -15,10 +16,12 @@ namespace BookReviewing.Entities.Repositories
             _dbSet = _context.Set<TEntity>();
         }
 
-        public List<TEntity> GetAll()
+        public List<TEntity> GetMany(PaginationFilter filter)
         {
             return _dbSet
                 .AsNoTracking()
+                .Skip(filter.CurrentPage * filter.PageSize)
+                .Take(filter.PageSize)
                 .ToList();
         }
 

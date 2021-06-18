@@ -1,6 +1,7 @@
 ﻿using BookReviewing.Entities.Models;
 using BookReviewing.Entities.Repositories;
 using BookReviewing.Services.Dto.BookReview;
+using BookReviewing.Shared.Filters;
 using System;
 using System.Collections.Generic;
 
@@ -15,14 +16,14 @@ namespace BookReviewing.Services.DomainServices
             _repository = new BookReviewRepository();
         }
 
-        public IEnumerable<BookReviewDto> GetAll()
+        public IEnumerable<BookReviewDto> GetByFilter(BookReviewFilter filter)
         {
-            var entities = _repository.GetAll();
+            var entities = _repository.GetByFilter(filter);
             var dtos = new List<BookReviewDto>();
-            
+
             foreach (var entity in entities)
                 dtos.Add(MapEntityToDto(entity));
-            
+
             return dtos;
         }
 

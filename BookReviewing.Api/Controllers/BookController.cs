@@ -1,12 +1,8 @@
 ﻿using BookReviewing.Entities.Models;
 using BookReviewing.Entities.Repositories;
 using BookReviewing.Services.Dto.Book;
-using Microsoft.AspNetCore.Http;
+using BookReviewing.Shared.Filters;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace BookReviewing.Api.Controllers
 {
@@ -22,9 +18,11 @@ namespace BookReviewing.Api.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult Get([FromQuery] PaginationFilter filter)
         {
-            var books = _repository.GetAll();
+            filter ??= new PaginationFilter();
+
+            var books = _repository.GetMany(filter);
             return Ok(books);
         }
 

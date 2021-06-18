@@ -1,9 +1,8 @@
-﻿using BookReviewing.Entities.Models;
-using BookReviewing.Entities.Repositories;
-using BookReviewing.Services.DomainServices;
+﻿using BookReviewing.Services.DomainServices;
 using BookReviewing.Services.Dto.BookReview;
+using BookReviewing.Services.Dto.Misc;
+using BookReviewing.Shared.Filters;
 using Microsoft.AspNetCore.Mvc;
-using System;
 
 namespace BookReviewing.Api.Controllers
 {
@@ -19,10 +18,13 @@ namespace BookReviewing.Api.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult Get([FromQuery] BookReviewFilter filter)
         {
-            var bookReviews = _service.GetAll();
-            return Ok(bookReviews);
+            filter ??= new BookReviewFilter();
+
+            var bookReviews = _service.GetByFilter(filter);
+            var response = new PaginatedResponse<BookReviewDto>(filter, bookReviews);
+            return Ok(response);
         }
 
         [HttpGet("{id}")]
