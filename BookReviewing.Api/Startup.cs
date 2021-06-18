@@ -23,15 +23,18 @@ namespace BookReviewing.Api
         {
             services.AddControllers();
             services.AddSwaggerGen();
-            services.AddHostedService<BookCreatedConsumer>();
+            
+            services.AddScoped<IBookReviewRepository, BookReviewRepository>();
+            services.AddScoped<IBookRepository, BookRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
 
             services.AddScoped<IBookReviewService, BookReviewService>();
             services.AddScoped<IBookService, BookService>();
             services.AddScoped<IUserService, UserService>();
 
-            services.AddScoped<IBookReviewRepository, BookReviewRepository>();
-            services.AddScoped<IBookRepository, BookRepository>();
-            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddHostedService<BookCreatedConsumer>();
+            services.AddHostedService<BookRemovedConsumer>();
+            services.AddHostedService<UserCreatedConsumer>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

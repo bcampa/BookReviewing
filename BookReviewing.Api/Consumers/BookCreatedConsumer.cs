@@ -1,20 +1,25 @@
 ﻿using BookReviewing.Services.DomainServices.Contracts;
 using BookReviewing.Services.Messages.Book;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace BookReviewing.Api.Consumers
 {
     public class BookCreatedConsumer : RabbitMqListener<BookCreatedMessage>
     {
-        private readonly IBookService _service;
+        private readonly IServiceScopeFactory _serviceScopeFactory;
 
-        public BookCreatedConsumer(IBookService service) : base("book-created")
+        public BookCreatedConsumer(IServiceScopeFactory serviceScopeFactory) : base("book-created")
         {
-            _service = service;
+            _serviceScopeFactory = serviceScopeFactory;
         }
 
         protected override void HandleMessage(BookCreatedMessage message)
         {
-            _service.AddBook(message);
+            using (var scope = _serviceScopeFactory.CreateScope())
+            {
+                var service = scope.ServiceProvider.GetRequiredService<IBookService>();
+                service.AddBook(message);
+            }
         }
     }
 }
