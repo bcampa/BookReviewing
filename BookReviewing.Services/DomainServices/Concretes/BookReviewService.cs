@@ -1,19 +1,21 @@
 ﻿using BookReviewing.Entities.Models;
 using BookReviewing.Entities.Repositories;
+using BookReviewing.Entities.Repositories.Contracts;
+using BookReviewing.Services.DomainServices.Contracts;
 using BookReviewing.Services.Dto.BookReview;
 using BookReviewing.Shared.Filters;
 using System;
 using System.Collections.Generic;
 
-namespace BookReviewing.Services.DomainServices
+namespace BookReviewing.Services.DomainServices.Concretes
 {
-    public class BookReviewService
+    public class BookReviewService : IBookReviewService
     {
-        private readonly BookReviewRepository _repository;
+        private readonly IBookReviewRepository _repository;
 
-        public BookReviewService()
+        public BookReviewService(IBookReviewRepository repository)
         {
-            _repository = new BookReviewRepository();
+            _repository = repository;
         }
 
         public IEnumerable<BookReviewDto> GetByFilter(BookReviewFilter filter)

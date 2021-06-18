@@ -1,5 +1,5 @@
 ﻿using BookReviewing.Entities.Models;
-using BookReviewing.Entities.Repositories;
+using BookReviewing.Entities.Repositories.Contracts;
 using BookReviewing.Services.Dto.User;
 using BookReviewing.Shared.Filters;
 using Microsoft.AspNetCore.Mvc;
@@ -10,11 +10,11 @@ namespace BookReviewing.Api.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly UserRepository _repository;
+        private readonly IUserRepository _repository;
 
-        public UserController()
+        public UserController(IUserRepository repository)
         {
-            _repository = new UserRepository();
+            _repository = repository;
         }
 
         [HttpGet]

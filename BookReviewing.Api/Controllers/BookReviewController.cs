@@ -1,4 +1,4 @@
-﻿using BookReviewing.Services.DomainServices;
+﻿using BookReviewing.Services.DomainServices.Contracts;
 using BookReviewing.Services.Dto.BookReview;
 using BookReviewing.Services.Dto.Misc;
 using BookReviewing.Shared.Filters;
@@ -10,11 +10,11 @@ namespace BookReviewing.Api.Controllers
     [ApiController]
     public class BookReviewController : ControllerBase
     {
-        private readonly BookReviewService _service;
+        private readonly IBookReviewService _service;
 
-        public BookReviewController()
+        public BookReviewController(IBookReviewService service)
         {
-            _service = new BookReviewService();
+            _service = service;
         }
 
         [HttpGet]

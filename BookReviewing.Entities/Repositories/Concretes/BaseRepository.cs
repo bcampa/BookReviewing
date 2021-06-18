@@ -1,11 +1,12 @@
-﻿using BookReviewing.Shared.Filters;
+﻿using BookReviewing.Entities.Repositories.Contracts;
+using BookReviewing.Shared.Filters;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace BookReviewing.Entities.Repositories
+namespace BookReviewing.Entities.Repositories.Concretes
 {
-    public class BaseRepository<TEntity> where TEntity : class
+    public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : class
     {
         protected readonly BookReviewingContext _context;
         private readonly DbSet<TEntity> _dbSet;

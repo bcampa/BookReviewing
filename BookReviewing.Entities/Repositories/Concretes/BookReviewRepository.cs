@@ -1,12 +1,13 @@
 ﻿using BookReviewing.Entities.Models;
+using BookReviewing.Entities.Repositories.Contracts;
 using BookReviewing.Shared.Filters;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace BookReviewing.Entities.Repositories
+namespace BookReviewing.Entities.Repositories.Concretes
 {
-    public class BookReviewRepository : BaseRepository<BookReview>
+    public class BookReviewRepository : BaseRepository<BookReview>, IBookReviewRepository
     {
         public BookReviewRepository() : base() { }
 
