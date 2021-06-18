@@ -1,4 +1,8 @@
 using BookReviewing.Api.Consumers;
+using BookReviewing.Entities.Repositories.Concretes;
+using BookReviewing.Entities.Repositories.Contracts;
+using BookReviewing.Services.DomainServices.Concretes;
+using BookReviewing.Services.DomainServices.Contracts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -20,6 +24,12 @@ namespace BookReviewing.Api
             services.AddControllers();
             services.AddSwaggerGen();
             services.AddHostedService<BookCreatedConsumer>();
+
+            services.AddScoped<IBookReviewService, BookReviewService>();
+
+            services.AddScoped<IBookRepository, BookRepository>();
+            services.AddScoped<IBookReviewRepository, BookReviewRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -13,6 +13,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BookReviewing.Entities\BookReviewing.Entities.csproj" />
+    <ProjectReference Include="..\BookReviewing.Services\BookReviewing.Services.csproj" />
+    <ProjectReference Include="..\BookReviewing.Shared\BookReviewing.Shared.csproj" />
   </ItemGroup>
 
 </Project>

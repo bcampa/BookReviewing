@@ -1,11 +1,8 @@
 ﻿using BookReviewing.Entities.Models;
-using BookReviewing.Entities.Repositories;
-using Microsoft.AspNetCore.Http;
+using BookReviewing.Entities.Repositories.Contracts;
+using BookReviewing.Services.Dto.Book;
+using BookReviewing.Shared.Filters;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace BookReviewing.Api.Controllers
 {
@@ -13,23 +10,27 @@ namespace BookReviewing.Api.Controllers
     [ApiController]
     public class BookController : ControllerBase
     {
-        private readonly BookRepository _repository;
+        private readonly IBookRepository _repository;
 
-        public BookController()
+        public BookController(IBookRepository repository)
         {
-            _repository = new BookRepository();
+            _repository = repository;
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult Get([FromQuery] PaginationFilter filter)
         {
-            var books = _repository.GetAll();
+            filter ??= new PaginationFilter();
+
+            var books = _repository.GetMany(filter);
             return Ok(books);
         }
 
         [HttpPost]
-        public IActionResult Add([FromBody] Book book)
+        public IActionResult Add([FromBody] CreateBookRequest request)
         {
+            var book = new Book { Id = request.Id };
+
             _repository.Add(book);
             _repository.SaveChanges();
             return Ok(book);
