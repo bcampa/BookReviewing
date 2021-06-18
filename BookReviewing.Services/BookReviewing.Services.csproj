@@ -1,17 +1,11 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.4" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\BookReviewing.Entities\BookReviewing.Entities.csproj" />
-    <ProjectReference Include="..\BookReviewing.Services\BookReviewing.Services.csproj" />
     <ProjectReference Include="..\BookReviewing.Shared\BookReviewing.Shared.csproj" />
   </ItemGroup>
 

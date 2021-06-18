@@ -1,10 +1,7 @@
-using BookReviewing.Entities;
 using BookReviewing.Entities.Models;
-using BookReviewing.Entities.Repositories;
-using Microsoft.Data.Sqlite;
+using BookReviewing.Entities.Repositories.Concretes;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
-using System;
 
 namespace BookReviewing.Tests.RepositoryTests
 {

@@ -11,4 +11,8 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.7" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BookReviewing.Shared\BookReviewing.Shared.csproj" />
+  </ItemGroup>
+
 </Project>

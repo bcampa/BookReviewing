@@ -1,10 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using BookReviewing.Entities.Repositories.Contracts;
+using BookReviewing.Shared.Filters;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace BookReviewing.Entities.Repositories
+namespace BookReviewing.Entities.Repositories.Concretes
 {
-    public class BaseRepository<TEntity> where TEntity : class
+    public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : class
     {
         protected readonly BookReviewingContext _context;
         private readonly DbSet<TEntity> _dbSet;
@@ -15,10 +17,12 @@ namespace BookReviewing.Entities.Repositories
             _dbSet = _context.Set<TEntity>();
         }
 
-        public List<TEntity> GetAll()
+        public List<TEntity> GetMany(PaginationFilter filter)
         {
             return _dbSet
                 .AsNoTracking()
+                .Skip(filter.CurrentPage * filter.PageSize)
+                .Take(filter.PageSize)
                 .ToList();
         }
 

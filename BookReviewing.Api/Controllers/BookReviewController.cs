@@ -1,5 +1,7 @@
-﻿using BookReviewing.Entities.Models;
-using BookReviewing.Entities.Repositories;
+﻿using BookReviewing.Services.DomainServices.Contracts;
+using BookReviewing.Services.Dto.BookReview;
+using BookReviewing.Services.Dto.Misc;
+using BookReviewing.Shared.Filters;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookReviewing.Api.Controllers
@@ -8,48 +10,48 @@ namespace BookReviewing.Api.Controllers
     [ApiController]
     public class BookReviewController : ControllerBase
     {
-        private readonly BookReviewRepository _repository;
+        private readonly IBookReviewService _service;
 
-        public BookReviewController()
+        public BookReviewController(IBookReviewService service)
         {
-            _repository = new BookReviewRepository();
+            _service = service;
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult Get([FromQuery] BookReviewFilter filter)
         {
-            var bookReviews = _repository.GetAll();
-            return Ok(bookReviews);
+            filter ??= new BookReviewFilter();
+
+            var bookReviews = _service.GetByFilter(filter);
+            var response = new PaginatedResponse<BookReviewDto>(filter, bookReviews);
+            return Ok(response);
         }
 
         [HttpGet("{id}")]
         public IActionResult GetById([FromRoute] int id)
         {
-            var bookReviews = _repository.GetById(id);
+            var bookReviews = _service.GetById(id);
             return Ok(bookReviews);
         }
 
         [HttpPost]
-        public IActionResult Add([FromBody] BookReview bookReview)
+        public IActionResult Add([FromBody] CreateBookReviewRequest request)
         {
-            _repository.Add(bookReview);
-            _repository.SaveChanges();
-            return Ok(bookReview);
+            BookReviewDto response = _service.Add(request);
+            return Ok(response);
         }
 
         [HttpPut]
-        public IActionResult Update([FromBody] BookReview bookReview)
+        public IActionResult Update([FromBody] UpdateBookReviewRequest request)
         {
-            _repository.Update(bookReview);
-            _repository.SaveChanges();
-            return Ok(bookReview);
+            BookReviewDto response = _service.Update(request);
+            return Ok(response);
         }
 
         [HttpDelete("{id}")]
         public IActionResult Delete([FromRoute] int id)
         {
-            _repository.DeleteById(id);
-            _repository.SaveChanges();
+            _service.Delete(id);
             return Ok();
         }
     }
