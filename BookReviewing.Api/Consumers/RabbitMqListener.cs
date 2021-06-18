@@ -7,17 +7,17 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace BookReviewing.Api
+namespace BookReviewing.Api.Consumers
 {
-    public class BookCreatedConsumer : BackgroundService
+    public abstract class RabbitMqListener<TMessage> : BackgroundService
     {
         private IConnection _connection;
         private IModel _channel;
-        private string _queueName = "book-created";
+        private string _queueName;
 
-        public BookCreatedConsumer()
+        public RabbitMqListener(string queueName)
         {
-            InitializeRabbitMqListener();
+            InitializeRabbitMqListener(queueName);
         }
 
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
@@ -28,10 +28,9 @@ namespace BookReviewing.Api
             consumer.Received += (ch, ea) =>
             {
                 var content = Encoding.UTF8.GetString(ea.Body.ToArray());
-                var bookCreated = JsonConvert.DeserializeObject<BookCreatedMessage>(content);
+                var message = JsonConvert.DeserializeObject<TMessage>(content);
 
-                //HandleMessage(bookCreated);
-                Console.WriteLine("A MENSAGEM CHEGOU");
+                HandleMessage(message);
 
                 _channel.BasicAck(ea.DeliveryTag, false);
             };
@@ -45,23 +44,20 @@ namespace BookReviewing.Api
             return Task.CompletedTask;
         }
 
-        private void InitializeRabbitMqListener()
+        private void InitializeRabbitMqListener(string queueName)
         {
             var factory = new ConnectionFactory
             {
                 HostName = "localhost"
             };
 
+            _queueName = queueName;
             _connection = factory.CreateConnection();
             //_connection.ConnectionShutdown += RabbitMQ_ConnectionShutdown;
             _channel = _connection.CreateModel();
             _channel.QueueDeclare(queue: _queueName, durable: false, exclusive: false, autoDelete: false, arguments: null);
         }
-    }
 
-    public class BookCreatedMessage
-    {
-        public int BookId { get; set; }
-        public DateTime CreatedAt { get; set; }
+        protected abstract void HandleMessage(TMessage message);
     }
 }
