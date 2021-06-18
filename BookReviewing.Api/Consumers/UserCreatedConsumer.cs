@@ -1,14 +1,20 @@
-﻿using BookReviewing.Services.Messages.User;
+﻿using BookReviewing.Services.DomainServices.Contracts;
+using BookReviewing.Services.Messages.User;
 
 namespace BookReviewing.Api.Consumers
 {
     public class UserCreatedConsumer : RabbitMqListener<UserCreatedMessage>
     {
-        public UserCreatedConsumer() : base("user-created") { }
+        private readonly IUserService _service;
+
+        public UserCreatedConsumer(IUserService service) : base("user-created")
+        {
+            _service = service;
+        }
 
         protected override void HandleMessage(UserCreatedMessage message)
         {
-            // Do nothing
+            _service.AddUser(message);
         }
     }
 }

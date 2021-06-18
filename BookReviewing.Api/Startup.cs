@@ -26,9 +26,11 @@ namespace BookReviewing.Api
             services.AddHostedService<BookCreatedConsumer>();
 
             services.AddScoped<IBookReviewService, BookReviewService>();
+            services.AddScoped<IBookService, BookService>();
+            services.AddScoped<IUserService, UserService>();
 
-            services.AddScoped<IBookRepository, BookRepository>();
             services.AddScoped<IBookReviewRepository, BookReviewRepository>();
+            services.AddScoped<IBookRepository, BookRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
         }
 
