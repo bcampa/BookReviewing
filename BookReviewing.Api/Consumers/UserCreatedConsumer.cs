@@ -1,4 +1,4 @@
-﻿using System;
+﻿using BookReviewing.Services.Messages.User;
 
 namespace BookReviewing.Api.Consumers
 {
@@ -10,11 +10,5 @@ namespace BookReviewing.Api.Consumers
         {
             // Do nothing
         }
-    }
-
-    public class UserCreatedMessage
-    {
-        public int UserId { get; set; }
-        public DateTime CreatedAt { get; set; }
     }
 }
