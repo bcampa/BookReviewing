@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace BookReviewing.Entities.Models
 {
@@ -10,6 +11,8 @@ namespace BookReviewing.Entities.Models
         }
 
         public int Id { get; set; }
+        public Guid Guid { get; set; }
+        public string Name { get; set; }
 
         public virtual ICollection<BookReview> BookReview { get; set; }
     }

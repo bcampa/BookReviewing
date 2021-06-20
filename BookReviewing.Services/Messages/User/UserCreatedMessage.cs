@@ -4,7 +4,7 @@ namespace BookReviewing.Services.Messages.User
 {
     public class UserCreatedMessage
     {
-        public int UserId { get; set; }
-        public DateTime CreatedAt { get; set; }
+        public string UserId { get; set; }
+        public string Name { get; set; }
     }
 }

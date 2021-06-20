@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BookReviewing.Services.Dto.User;
+using System;
 
 namespace BookReviewing.Services.Dto.BookReview
 {
@@ -11,5 +12,6 @@ namespace BookReviewing.Services.Dto.BookReview
         public int UserId { get; set; }
         public DateTime DatePosted { get; set; }
         public DateTime LastUpdate { get; set; }
+        public UserDto User { get; set; }
     }
 }
