@@ -3,6 +3,7 @@ using BookReviewing.Entities.Repositories;
 using BookReviewing.Entities.Repositories.Contracts;
 using BookReviewing.Services.DomainServices.Contracts;
 using BookReviewing.Services.Dto.BookReview;
+using BookReviewing.Services.Dto.User;
 using BookReviewing.Shared.Filters;
 using System;
 using System.Collections.Generic;
@@ -76,7 +77,7 @@ namespace BookReviewing.Services.DomainServices.Concretes
 
         private BookReviewDto MapEntityToDto(BookReview entity)
         {
-            return new BookReviewDto
+            var dto = new BookReviewDto
             {
                 Id = entity.Id,
                 BookId = entity.BookId,
@@ -86,6 +87,17 @@ namespace BookReviewing.Services.DomainServices.Concretes
                 DatePosted = entity.DatePosted,
                 LastUpdate = entity.LastUpdate
             };
+
+            if (entity.User != null)
+            {
+                dto.User = new UserDto
+                {
+                    Guid = entity.User.Guid,
+                    Name = entity.User.Name
+                };
+            }
+
+            return dto;
         }
     }
 }

@@ -13,7 +13,9 @@ namespace BookReviewing.Entities.Repositories.Concretes
 
         public List<BookReview> GetByFilter(BookReviewFilter filter)
         {
-            IQueryable<BookReview> query = _context.BookReviews.AsNoTracking();
+            IQueryable<BookReview> query = _context.BookReviews
+                .AsNoTracking()
+                .Include(x => x.User);
 
             if (filter.BookId.HasValue)
                 query = query.Where(x => x.BookId == filter.BookId);
