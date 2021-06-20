@@ -19,8 +19,8 @@ namespace BookReviewing.Entities.Repositories.Concretes
 
             if (filter.BookId.HasValue)
                 query = query.Where(x => x.BookId == filter.BookId);
-            if (filter.UserId.HasValue)
-                query = query.Where(x => x.UserId == filter.UserId);
+            if (filter.UserGuid.HasValue)
+                query = query.Where(x => x.User.Guid == filter.UserGuid);
 
             var paginatedQuery = query
                 .Skip(filter.CurrentPage * filter.PageSize)
