@@ -1,8 +1,10 @@
-﻿namespace BookReviewing.Shared.Filters
+﻿using System;
+
+namespace BookReviewing.Shared.Filters
 {
     public class BookReviewFilter : PaginationFilter
     {
         public int? BookId { get; set; }
-        public int? UserId { get; set; }
+        public Guid? UserGuid { get; set; }
     }
 }

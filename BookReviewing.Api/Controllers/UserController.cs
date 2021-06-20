@@ -3,6 +3,7 @@ using BookReviewing.Entities.Repositories.Contracts;
 using BookReviewing.Services.Dto.User;
 using BookReviewing.Shared.Filters;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace BookReviewing.Api.Controllers
 {
@@ -29,7 +30,11 @@ namespace BookReviewing.Api.Controllers
         [HttpPost]
         public IActionResult Add([FromBody] CreateUserRequest request)
         {
-            var user = new User { Id = request.Id };
+            var user = new User
+            {
+                Guid = request.Guid,
+                Name = request.Name
+            };
 
             _repository.Add(user);
             _repository.SaveChanges();

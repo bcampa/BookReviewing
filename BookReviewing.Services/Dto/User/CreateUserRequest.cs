@@ -1,7 +1,10 @@
-﻿namespace BookReviewing.Services.Dto.User
+﻿using System;
+
+namespace BookReviewing.Services.Dto.User
 {
     public class CreateUserRequest
     {
-        public int Id { get; set; }
+        public Guid Guid { get; set; }
+        public string Name { get; set; }
     }
 }
