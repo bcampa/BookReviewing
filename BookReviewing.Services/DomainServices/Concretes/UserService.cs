@@ -2,6 +2,7 @@
 using BookReviewing.Entities.Repositories.Contracts;
 using BookReviewing.Services.DomainServices.Contracts;
 using BookReviewing.Services.Messages.User;
+using System;
 
 namespace BookReviewing.Services.DomainServices.Concretes
 {
@@ -18,7 +19,8 @@ namespace BookReviewing.Services.DomainServices.Concretes
         {
             var entity = new User
             {
-                Id = message.UserId
+                Guid = Guid.Parse(message.UserId),
+                Name = message.Name
             };
 
             _userRepository.Add(entity);
