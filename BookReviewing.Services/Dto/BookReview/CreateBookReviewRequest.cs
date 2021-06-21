@@ -7,6 +7,6 @@ namespace BookReviewing.Services.Dto.BookReview
         public float Score { get; set; }
         public string Comment { get; set; }
         public int BookId { get; set; }
-        public Guid UserGuid { get; set; }
+        public string UserGuid { get; set; }
     }
 }

@@ -42,7 +42,8 @@ namespace BookReviewing.Services.DomainServices.Concretes
         {
             var currentTime = DateTime.Now;
 
-            var user = _userRepository.GetByGuid(request.UserGuid);
+            var userGuid = Guid.Parse(request.UserGuid);
+            var user = _userRepository.GetByGuid(userGuid);
 
             if (user == null)
             {
