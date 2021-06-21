@@ -21,6 +21,6 @@ namespace BookReviewing.Entities
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
-            => options.UseSqlite(@"Data Source=C:\BookReviewingDB\book_reviewing.db");
+            => options.UseSqlite("Data Source=book_reviewing.db");
     }
 }
