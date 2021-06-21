@@ -52,6 +52,13 @@ namespace BookReviewing.Api
             {
                 app.UseDeveloperExceptionPage();
             }
+            
+            app.UseCors(policy =>
+            {
+                policy.WithOrigins("http://localhost:4200")
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
+            });
 
             app.UseRouting();
 
