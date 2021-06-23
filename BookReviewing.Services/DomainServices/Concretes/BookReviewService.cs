@@ -31,8 +31,9 @@ namespace BookReviewing.Services.DomainServices.Concretes
             var entities = _bookReviewRepository.GetByFilter(filter);
             var dtos = new List<BookReviewDto>();
 
-            foreach (var entity in entities)
-                dtos.Add(MapEntityToDto(entity));
+            if (entities != null)
+                foreach (var entity in entities)
+                    dtos.Add(MapEntityToDto(entity));
 
             return dtos;
         }
@@ -40,6 +41,12 @@ namespace BookReviewing.Services.DomainServices.Concretes
         public BookReviewDto GetById(int id)
         {
             var entity = _bookReviewRepository.GetById(id);
+
+            if (entity == null)
+            {
+                throw new Exception("Book review not found");
+            }
+
             return MapEntityToDto(entity);
         }
 
@@ -83,10 +90,15 @@ namespace BookReviewing.Services.DomainServices.Concretes
 
         public BookReviewDto Update(UpdateBookReviewRequest request)
         {
-            var entity = _bookReviewRepository.GetById(request.Id);
-
             ValidateScore(request.Score);
             ValidateComment(request.Comment);
+
+            var entity = _bookReviewRepository.GetById(request.Id);
+
+            if (entity == null)
+            {
+                throw new Exception("Book review not found");
+            }
 
             entity.Score = request.Score;
             entity.Comment = request.Comment;
