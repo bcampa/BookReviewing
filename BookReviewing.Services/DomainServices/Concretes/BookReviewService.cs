@@ -13,11 +13,16 @@ namespace BookReviewing.Services.DomainServices.Concretes
     public class BookReviewService : IBookReviewService
     {
         private readonly IBookReviewRepository _bookReviewRepository;
+        private readonly IBookRepository _bookRepository;
         private readonly IUserRepository _userRepository;
 
-        public BookReviewService(IBookReviewRepository bookReviewRepository, IUserRepository userRepository)
+        public BookReviewService(
+            IBookReviewRepository bookReviewRepository,
+            IBookRepository bookRepository,
+            IUserRepository userRepository)
         {
             _bookReviewRepository = bookReviewRepository;
+            _bookRepository = bookRepository;
             _userRepository = userRepository;
         }
 
@@ -26,8 +31,9 @@ namespace BookReviewing.Services.DomainServices.Concretes
             var entities = _bookReviewRepository.GetByFilter(filter);
             var dtos = new List<BookReviewDto>();
 
-            foreach (var entity in entities)
-                dtos.Add(MapEntityToDto(entity));
+            if (entities != null)
+                foreach (var entity in entities)
+                    dtos.Add(MapEntityToDto(entity));
 
             return dtos;
         }
@@ -35,6 +41,12 @@ namespace BookReviewing.Services.DomainServices.Concretes
         public BookReviewDto GetById(int id)
         {
             var entity = _bookReviewRepository.GetById(id);
+
+            if (entity == null)
+            {
+                throw new Exception("Book review not found");
+            }
+
             return MapEntityToDto(entity);
         }
 
@@ -42,12 +54,22 @@ namespace BookReviewing.Services.DomainServices.Concretes
         {
             var currentTime = DateTime.Now;
 
+            ValidateScore(request.Score);
+            ValidateComment(request.Comment);
+
+            var book = _bookRepository.GetById(request.BookId);
+
+            if (book == null)
+            {
+                throw new Exception("Book not found");
+            }
+
             var userGuid = Guid.Parse(request.UserGuid);
             var user = _userRepository.GetByGuid(userGuid);
 
             if (user == null)
             {
-                throw new Exception("No user with such GUID");
+                throw new Exception("User not found");
             }
 
             var entity = new BookReview
@@ -68,7 +90,15 @@ namespace BookReviewing.Services.DomainServices.Concretes
 
         public BookReviewDto Update(UpdateBookReviewRequest request)
         {
+            ValidateScore(request.Score);
+            ValidateComment(request.Comment);
+
             var entity = _bookReviewRepository.GetById(request.Id);
+
+            if (entity == null)
+            {
+                throw new Exception("Book review not found");
+            }
 
             entity.Score = request.Score;
             entity.Comment = request.Comment;
@@ -107,6 +137,21 @@ namespace BookReviewing.Services.DomainServices.Concretes
             }
 
             return dto;
+        }
+
+        private void ValidateScore(float score)
+        {
+            if (score < 0 || score > 5)
+                throw new Exception("The score must be between 0 and 5");
+        }
+
+        private void ValidateComment(string comment)
+        {
+            if (string.IsNullOrEmpty(comment))
+                throw new Exception("Comment must not be empty");
+
+            if (comment.Length > 4000)
+                throw new Exception("Comments cannot exceed 4000 characters");
         }
     }
 }
