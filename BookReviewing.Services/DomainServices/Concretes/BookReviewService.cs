@@ -112,7 +112,15 @@ namespace BookReviewing.Services.DomainServices.Concretes
 
         public void Delete(int id)
         {
-            _bookReviewRepository.DeleteById(id);
+            var entity = _bookReviewRepository.GetById(id);
+
+            if (entity == null)
+            {
+                throw new Exception("Book review not found");
+            }
+
+            _bookReviewRepository.Delete(entity);
+            _bookReviewRepository.SaveChanges();
         }
 
         private BookReviewDto MapEntityToDto(BookReview entity)
